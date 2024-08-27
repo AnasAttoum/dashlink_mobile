@@ -3,6 +3,8 @@ import TextField from '@mui/material/TextField';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import styles from '../../styles/device.module.css'
+
 export default function SubInputMUI({ title, type, index, currentVal, setData }) {
     const theme = createTheme({
         palette: {
@@ -23,7 +25,7 @@ export default function SubInputMUI({ title, type, index, currentVal, setData })
     });
     return (
         <ThemeProvider theme={theme}>
-            <TextField id={title} sx={{ width: '15vw', margin: '25px' }} value={currentVal} label={title} className='m-5' variant="outlined" color='primary'
+            <TextField id={title} sx={{ width: '15vw', margin: '25px' }} value={currentVal} label={title} className={`m-5 ${styles.input}`} variant="outlined" color='primary'
                 onChange={(e) => {
                     setData(prev => ({
                         ...prev, [type]: prev[type].map((el, i) => {

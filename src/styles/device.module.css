@@ -1,0 +1,42 @@
+.edit{
+    background-color: var(--primary);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.edit:hover{
+    background-color: var(--secondary);
+    transform: scale(1.05);
+}
+
+@media (width<1000px) {
+    .container{
+        flex-direction: column;
+    }
+}
+
+@media (width<650px) {
+    .container{
+        flex-direction: column;
+        align-items: center;
+    }
+    .version{
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--primary);
+        width: 67vw;
+    }
+    .input{
+        width: 60vw !important;
+    }
+}
+
+@media (width<450px) {
+    .version{
+        border-bottom: none;
+        width: 72vw;
+    }
+}

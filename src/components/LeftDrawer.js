@@ -7,8 +7,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 
 import { Link, Outlet } from 'react-router-dom'
 
@@ -30,8 +28,8 @@ export default function LeftDrawer() {
             <ListItemText primary={'DashLink Mobile'} sx={{ color: 'var(--primary)' }} />
           </ListItemButton>
         </ListItem>
-        {links.map(link => (
-          <Link key={link.name} to={link.url}>
+        {links.map((link,index) => (
+          <Link key={index} to={link.url}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -45,8 +43,8 @@ export default function LeftDrawer() {
       </List>
       <Divider />
       <List>
-        {subLinks.map(link => (
-          <Link key={link.name} to={link.url}>
+        {subLinks.map((link,index) => (
+          <Link key={index} to={link.url}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>

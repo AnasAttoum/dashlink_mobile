@@ -8,8 +8,8 @@ export default function Header({ toggleDrawer }) {
         <div className={`${styles.header} p-5`}>
             <div className='cursor-pointer' onClick={toggleDrawer(true)}>
                 <div className='flex gap-5'>
-                    <MenuIcon />
-                    <div>DashLink Mobile</div>
+                    <MenuIcon sx={{ color: 'var(--primary)' }}/>
+                    <div style={{ color: 'var(--primary)' }}>DashLink Mobile</div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { DELETE_DEVICE, EDIT_DEVICE } from "./actionTypes"
+import { ADD_DEVICE, DELETE_DEVICE, EDIT_DEVICE } from "./actionTypes"
 
 const devices = [
     { image: '/Images/Devices/Lenovo Z6 Pro 5G.jpg', name: 'Lenovo Z6 Pro', date: new Date('2019, November 15'), ram: [6, 8, 8, 12], storage: [128, 128, 256, 512], price: [400, 452, 480, 500] },
@@ -12,6 +12,9 @@ const devices = [
 
 export default function Devices(state = devices, action) {
     switch (action.type) {
+        case ADD_DEVICE:
+            return [...state,action.payload]
+
         case EDIT_DEVICE:
             return state.map((device, index) => {
                 if (index === parseInt(action.payload.index)) {

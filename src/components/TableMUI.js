@@ -214,7 +214,7 @@ export default function TableMUI() {
         ) : (
           <Typography
             sx={{ flex: '1 1 100%', color: 'var(--primary)', textAlign: 'center' }}
-            variant="h4"
+            variant="h5"
             id="tableTitle"
             component="div"
           >
