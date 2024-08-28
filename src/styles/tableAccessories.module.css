@@ -1,0 +1,14 @@
+@media (width<1000px) {
+    .filter{
+        width: 100vw !important;
+    }
+    .empty{
+        width: 40vw !important;
+    }
+}
+
+@media (width<400px) {
+    .empty{
+        width: 60vw !important;
+    }
+}

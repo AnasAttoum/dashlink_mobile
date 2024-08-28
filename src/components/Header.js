@@ -5,7 +5,7 @@ import styles from '../styles/header.module.css'
 
 export default function Header({ toggleDrawer }) {
     return (
-        <div className={`${styles.header} p-5`}>
+        <div className={`${styles.header} flex p-5`}>
             <div className='cursor-pointer' onClick={toggleDrawer(true)}>
                 <div className='flex gap-5'>
                     <MenuIcon sx={{ color: 'var(--primary)' }}/>

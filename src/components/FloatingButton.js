@@ -5,9 +5,9 @@ import AddIcon from '@mui/icons-material/Add';
 import { Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export default function FloatingButton() {
+export default function FloatingButton({ link }) {
     return (
-        <Link to={'/devices/add'}>
+        <Link to={link}>
             <Box sx={{ position: 'fixed', bottom: '35px', right: '35px', '& > :not(style)': { m: 1 } }}>
                 <Tooltip title="Add Device">
                     <Fab aria-label="add" sx={{ backgroundColor: 'var(--primary)', '&:hover': { backgroundColor: 'var(--secondary)' } }}>

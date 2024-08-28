@@ -19,7 +19,7 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
 import { useSelector } from 'react-redux'
-import Slider from './Slider';
+import Slider from '../Slider';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
@@ -168,7 +168,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default function TableMUI() {
+export default function TableDevicesMUI() {
   const devices = useSelector(state => state.Devices)
 
   const rows = React.useMemo(() => {
@@ -394,7 +394,7 @@ export default function TableMUI() {
       </Box>
 
 
-      <Slider open={open} setOpen={setOpen} selected={selected} setSelected={setSelected} />
+      <Slider open={open} setOpen={setOpen} selected={selected} setSelected={setSelected} type='device' />
     </>
   );
 }

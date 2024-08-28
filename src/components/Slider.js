@@ -7,13 +7,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useDispatch } from 'react-redux';
-import { deleteDevice } from '../Reducers/actions';
+import { deleteAccessory, deleteDevice, deleteOffer } from '../Reducers/actions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Slider({ open, setOpen, selected, setSelected }) {
+export default function Slider({ open, setOpen, selected, setSelected,type }) {
 
     const dispatch = useDispatch()
 
@@ -21,7 +21,12 @@ export default function Slider({ open, setOpen, selected, setSelected }) {
         setOpen(false);
     };
     const del = () => {
-        dispatch(deleteDevice(selected));
+        if(type==='device')
+            dispatch(deleteDevice(selected));
+        else if(type==='accessory')
+            dispatch(deleteAccessory(selected));
+        else if(type==='offer')
+            dispatch(deleteOffer(selected));
         setSelected([]);
         setOpen(false);
     }

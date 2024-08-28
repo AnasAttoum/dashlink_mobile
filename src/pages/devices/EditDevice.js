@@ -16,7 +16,8 @@ export default function EditDevice() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { deviceIndex } = useParams()
-    const device = useSelector(state => state.Devices[deviceIndex])
+    const devices = useSelector(state => state.Devices)
+    const device = devices[deviceIndex]
 
     const [data, setData] = useState(device)
     const [warning, setWarning] = useState('')
@@ -49,6 +50,9 @@ export default function EditDevice() {
         if (data.name.length < 5) {
             setWarning('Name must be more than 4 character')
         }
+        else if (devices.filter((device, index) => { return device.name === data.name && index !== parseInt(deviceIndex) }).length !== 0) {
+            setWarning('Device name is already exist')
+        }
         else if (data.ram.includes(0)) {
             setWarning('RAM cannot be zero')
         }
@@ -57,6 +61,15 @@ export default function EditDevice() {
         }
         else if (data.price.includes(0)) {
             setWarning('Price cannot be zero')
+        }
+        else if (data.ram.some(el=>{return isNaN(el)})) {
+            setWarning('RAM must be a number')
+        }
+        else if (data.storage.some(el=>{return isNaN(el)})) {
+            setWarning('Storage must be a number')
+        }
+        else if (data.price.some(el=>{return isNaN(el)})) {
+            setWarning('Price must be a number')
         }
         else {
             setWarning('')
@@ -97,7 +110,7 @@ export default function EditDevice() {
                             </div>
 
                             <div>
-                                <InputMUI title='Device Name' helperText='' type='name' currentVal={data.name} setData={setData} />
+                                <InputMUI title='Device Name' type='name' currentVal={data.name} setData={setData} />
                                 <InputDateMUI title='Released' type='date' currentVal={data.date} setData={setData} />
 
                                 <div>

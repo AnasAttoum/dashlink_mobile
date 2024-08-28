@@ -3,29 +3,27 @@ import { useState } from 'react'
 import { Box, Button, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import styles from '../../styles/device.module.css'
 import InputMUI from '../../components/Inputs/InputMUI'
-import InputDateMUI from '../../components/Inputs/InputDateMUI'
-import SubInputMUI from '../../components/Inputs/SubInputMUI'
-import { addDevice } from '../../Reducers/actions';
+import { addAccessory } from '../../Reducers/actions';
+import DeviceSelect from '../../components/Inputs/DeviceSelect';
 
-export default function AddDevice() {
+export default function AddAccessory() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [warning, setWarning] = useState('')
-    const devices = useSelector(state => state.Devices)
+    const accessories = useSelector(state => state.Accessories)
 
     const [data, setData] = useState({
         image: '/Images/Upload.jpg',
         name: '',
         date: new Date(),
-        ram: [0],
-        storage: [0],
-        price: [0],
+        device: [''],
+        price: 0,
     })
 
     const handleSwitchImage = (e) => {
@@ -42,36 +40,27 @@ export default function AddDevice() {
 
     const add = () => {
         if (data.image === '/Images/Upload.jpg') {
-            setWarning('Please upload photo of the device')
+            setWarning('Please upload photo of the Accessory')
         }
-        else if (devices.filter((device, index) => { return device.name === data.name }).length !== 0) {
-            setWarning('Device name is already exist')
-        }
-        else if (data.name.length < 5) {
+        if (data.name.length < 5) {
             setWarning('Name must be more than 4 character')
         }
-        else if (data.ram.includes(0)) {
-            setWarning('RAM cannot be zero')
+        else if (accessories.filter((accessory, index) => { return accessory.name === data.name }).length !== 0) {
+            setWarning('Accessory name is already exist')
         }
-        else if (data.storage.includes(0)) {
-            setWarning('Storage cannot be zero')
+        else if (data.device.includes('')) {
+            setWarning('Please choose device')
         }
-        else if (data.price.includes(0)) {
+        else if (data.price === 0) {
             setWarning('Price cannot be zero')
         }
-        else if (data.ram.some(el=>{return isNaN(el)})) {
-            setWarning('RAM must be a number')
-        }
-        else if (data.storage.some(el=>{return isNaN(el)})) {
-            setWarning('Storage must be a number')
-        }
-        else if (data.price.some(el=>{return isNaN(el)})) {
+        else if (isNaN(data.price)) {
             setWarning('Price must be a number')
         }
         else {
             setWarning('')
-            dispatch(addDevice(data));
-            navigate('/devices');
+            dispatch(addAccessory(data));
+            navigate('/accessories');
         }
     }
 
@@ -86,7 +75,7 @@ export default function AddDevice() {
                         id="tableTitle"
                         component="div"
                     >
-                        Add Device
+                        Add Accessory
                     </Typography>
 
                     <div>
@@ -109,27 +98,18 @@ export default function AddDevice() {
 
                             <div>
 
-                                <InputMUI title='Device Name' type='name' currentVal={data.name} setData={setData} />
-                                <InputDateMUI title='Released' type='date' currentVal={data.date} setData={setData} />
+                                <InputMUI title='Accessory Name' type='name' currentVal={data.name} setData={setData} />
 
                                 <div>
-                                    {data.price.map((_, index) => {
-                                        return <div key={index} className={`flex justify-center ${styles.version}`}>
-                                            <SubInputMUI title='RAM (GB)' type='ram' index={index} currentVal={data.ram[index]} setData={setData} />
-                                            <SubInputMUI title='Storage (GB)' type='storage' index={index} currentVal={data.storage[index]} setData={setData} />
-                                            <SubInputMUI title='Price (€)' type='price' index={index} currentVal={data.price[index]} setData={setData} />
-                                            {data.price.length > 1 &&
+                                    {data.device.map((element, index) => {
+                                        return <div key={index} className='flex items-center'>
+                                            <DeviceSelect index={index} currentVal={element} setData={setData} />
+                                            {data.device.length > 1 &&
                                                 <IconButton onClick={() =>
                                                     setData(
                                                         prev => ({
                                                             ...prev,
-                                                            ram: prev.ram.filter((_, i) => {
-                                                                return i !== index
-                                                            }),
-                                                            storage: prev.storage.filter((_, i) => {
-                                                                return i !== index
-                                                            }),
-                                                            price: prev.price.filter((_, i) => {
+                                                            device: prev.device.filter((_, i) => {
                                                                 return i !== index
                                                             })
                                                         })
@@ -147,9 +127,7 @@ export default function AddDevice() {
                                         <IconButton onClick={() => setData(
                                             prev => ({
                                                 ...prev,
-                                                ram: [...prev.ram, 0],
-                                                storage: [...prev.storage, 0],
-                                                price: [...prev.price, 0],
+                                                device: [...prev.device, ''],
                                             })
                                         )}>
                                             <Tooltip title="Add Version">
@@ -157,6 +135,8 @@ export default function AddDevice() {
                                             </Tooltip>
                                         </IconButton>
                                     </div>
+
+                                    <InputMUI title='Price (€)' type='price' currentVal={data.price} setData={setData} />
                                 </div>
 
                             </div>
