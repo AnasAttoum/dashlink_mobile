@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNotification, deleteAccessory, deleteDevice, deleteOffer } from '../Reducers/actions';
+import { addNotification, deleteAccessory, deleteAccessoryFromOffer, deleteDevice, deleteOffer } from '../Reducers/actions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -25,27 +25,40 @@ export default function Slider({ open, setOpen, selected, setSelected, type }) {
     };
     const del = () => {
         if (type === 'device') {
-            dispatch(deleteDevice(selected));
+            const devicesWithOffer = offers.map(device => { return device.device })
+            console.log("🚀 ~ del ~ devicesWithOffer:", devicesWithOffer)
+
+            const selectedOfferToDelete=[]
             devices.filter((_, index) => {
                 return selected.includes(index)
             }).forEach(device => {
-                dispatch(addNotification({type:'delete',text:`admin delete "${device.name}" device`}))
+                dispatch(addNotification({ type: 'delete', text: `admin deleted "${device.name}" device` }))
+                if (devicesWithOffer.includes(device.name)) {
+                    selectedOfferToDelete.push(offers.findIndex(offer => { return offer.device === device.name }))
+                }
             })
+            dispatch(deleteOffer(selectedOfferToDelete));
+            dispatch(deleteDevice(selected));
         }
-        else if (type === 'accessory'){
-            dispatch(deleteAccessory(selected));
+        else if (type === 'accessory') {
             accessories.filter((_, index) => {
                 return selected.includes(index)
             }).forEach(accessory => {
-                dispatch(addNotification({type:'delete',text:`admin delete "${accessory.name}" accessory`}))
+                dispatch(addNotification({ type: 'delete', text: `admin deleted "${accessory.name}" accessory` }))
+                offers.forEach((offer,index)=>{
+                    if(offer.accessories.includes(accessory.name)){
+                        dispatch(deleteAccessoryFromOffer(index,accessory.name,accessory.price))
+                    }
+                })
             })
+            dispatch(deleteAccessory(selected));
         }
-        else if (type === 'offer'){
+        else if (type === 'offer') {
             dispatch(deleteOffer(selected));
             offers.filter((_, index) => {
                 return selected.includes(index)
             }).forEach(offer => {
-                dispatch(addNotification({type:'delete',text:`admin delete "${offer.device}" offer`}))
+                dispatch(addNotification({ type: 'delete', text: `admin deleted "${offer.device}" offer` }))
             })
         }
         setSelected([]);

@@ -62,7 +62,7 @@ export default function EditAccessory() {
         else {
             setWarning('')
             dispatch(editAccessory(accessoryIndex, data));
-            dispatch(addNotification({type:'edit',text:`admin edit "${data.name}" accessory`}))
+            dispatch(addNotification({type:'edit',text:`admin edited "${data.name}" accessory`}))
             navigate('/accessories')
         }
     }

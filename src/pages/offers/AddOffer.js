@@ -50,7 +50,7 @@ export default function AddOffer() {
         else {
             setWarning('')
             dispatch(addOffer(data));
-            dispatch(addNotification({type:'add',text:`admin add "${data.device}" offer`}))
+            dispatch(addNotification({type:'add',text:`admin added "${data.device}" offer`}))
             navigate('/offers')
         }
     }

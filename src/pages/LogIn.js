@@ -24,8 +24,6 @@ export default function LogIn() {
   }, [adminData, navigate])
 
   const handleLogIn = () => {
-    console.log(data.username, adminData.username)
-    console.log(data.password, adminData.password)
     if (data.username === adminData.username && data.password === adminData.password) {
       setWarning('')
       dispatch(logIn())

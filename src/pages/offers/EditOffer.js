@@ -51,7 +51,7 @@ export default function EditOffer() {
         else {
             setWarning('')
             dispatch(editOffer(offerIndex, data));
-            dispatch(addNotification({type:'edit',text:`admin edit "${data.device}" offer`}))
+            dispatch(addNotification({type:'edit',text:`admin edited "${data.device}" offer`}))
             navigate('/offers')
         }
     }

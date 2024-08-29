@@ -1,4 +1,4 @@
-import { ADD_ACCESSORY, ADD_DEVICE, ADD_NOTIFICATION, ADD_OFFER, DELETE_ACCESSORY, DELETE_DEVICE, DELETE_OFFER, EDIT_ACCESSORY, EDIT_DEVICE, EDIT_OFFER, LOG_IN, LOG_OUT } from "./actionTypes";
+import { ADD_ACCESSORY, ADD_DEVICE, ADD_NOTIFICATION, ADD_OFFER, DELETE_ACCESSORY, DELETE_ACCESSORY_FROM_OFFER, DELETE_DEVICE, DELETE_OFFER, EDIT_ACCESSORY, EDIT_DEVICE, EDIT_OFFER, LOG_IN, LOG_OUT } from "./actionTypes";
 
 // Device Actions
 export const addDevice = (obj) => ({
@@ -50,6 +50,10 @@ export const deleteOffer = (arr) => ({
     payload: arr
 })
 
+export const deleteAccessoryFromOffer = (index, accessoryName, price) => ({
+    type: DELETE_ACCESSORY_FROM_OFFER,
+    payload: { index: index, accessoryName: accessoryName, price: price }
+})
 
 // LogIn Actions
 export const logIn = () => ({
@@ -63,5 +67,5 @@ export const logOut = () => ({
 // Notifiaction Actions
 export const addNotification = (notification) => ({
     type: ADD_NOTIFICATION,
-    payload:notification
+    payload: notification
 })

@@ -60,7 +60,7 @@ export default function AddAccessory() {
         else {
             setWarning('')
             dispatch(addAccessory(data));
-            dispatch(addNotification({type:'add',text:`admin add "${data.name}" accessory`}))
+            dispatch(addNotification({type:'add',text:`admin added "${data.name}" accessory`}))
             navigate('/accessories');
         }
     }

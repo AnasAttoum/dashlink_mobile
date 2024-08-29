@@ -74,7 +74,7 @@ export default function EditDevice() {
         else {
             setWarning('')
             dispatch(editDevice(deviceIndex, data));
-            dispatch(addNotification({type:'edit',text:`admin edit "${data.name}" device`}))
+            dispatch(addNotification({type:'edit',text:`admin edited "${data.name}" device`}))
             navigate('/devices')
         }
     }

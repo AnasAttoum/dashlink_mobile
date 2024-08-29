@@ -71,7 +71,7 @@ export default function AddDevice() {
         else {
             setWarning('')
             dispatch(addDevice(data));
-            dispatch(addNotification({type:'add',text:`admin add "${data.name}" device`}))
+            dispatch(addNotification({type:'add',text:`admin added "${data.name}" device`}))
             navigate('/devices');
         }
     }

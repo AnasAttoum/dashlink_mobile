@@ -3,7 +3,7 @@ import { LOG_IN, LOG_OUT } from "./actionTypes"
 const adminData = {
     username: 'admin',
     password: '012345',
-    isLogged: false
+    isLogged: true
 }
 
 export default function Admin(state = adminData, action) {

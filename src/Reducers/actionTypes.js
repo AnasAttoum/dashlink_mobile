@@ -14,6 +14,7 @@ export const DELETE_ACCESSORY = 'DELETE_ACCESSORY';
 export const ADD_OFFER = 'ADD_OFFER';
 export const EDIT_OFFER = 'EDIT_OFFER';
 export const DELETE_OFFER = 'DELETE_OFFER';
+export const DELETE_ACCESSORY_FROM_OFFER = 'DELETE_ACCESSORY_FROM_OFFER';
 
 
 // LogIn Action
