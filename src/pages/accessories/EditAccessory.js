@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import styles from '../../styles/device.module.css'
-import { editAccessory } from '../../Reducers/actions'
+import { addNotification, editAccessory } from '../../Reducers/actions'
 import DeviceSelect from '../../components/Inputs/DeviceSelect'
 
 export default function EditAccessory() {
@@ -62,6 +62,7 @@ export default function EditAccessory() {
         else {
             setWarning('')
             dispatch(editAccessory(accessoryIndex, data));
+            dispatch(addNotification({type:'edit',text:`admin edit "${data.name}" accessory`}))
             navigate('/accessories')
         }
     }

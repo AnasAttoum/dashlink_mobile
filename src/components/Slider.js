@@ -6,27 +6,48 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { useDispatch } from 'react-redux';
-import { deleteAccessory, deleteDevice, deleteOffer } from '../Reducers/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNotification, deleteAccessory, deleteDevice, deleteOffer } from '../Reducers/actions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Slider({ open, setOpen, selected, setSelected,type }) {
+export default function Slider({ open, setOpen, selected, setSelected, type }) {
 
     const dispatch = useDispatch()
+    const devices = useSelector(state => state.Devices)
+    const accessories = useSelector(state => state.Accessories)
+    const offers = useSelector(state => state.Offers)
 
     const handleClose = () => {
         setOpen(false);
     };
     const del = () => {
-        if(type==='device')
+        if (type === 'device') {
             dispatch(deleteDevice(selected));
-        else if(type==='accessory')
+            devices.filter((_, index) => {
+                return selected.includes(index)
+            }).forEach(device => {
+                dispatch(addNotification({type:'delete',text:`admin delete "${device.name}" device`}))
+            })
+        }
+        else if (type === 'accessory'){
             dispatch(deleteAccessory(selected));
-        else if(type==='offer')
+            accessories.filter((_, index) => {
+                return selected.includes(index)
+            }).forEach(accessory => {
+                dispatch(addNotification({type:'delete',text:`admin delete "${accessory.name}" accessory`}))
+            })
+        }
+        else if (type === 'offer'){
             dispatch(deleteOffer(selected));
+            offers.filter((_, index) => {
+                return selected.includes(index)
+            }).forEach(offer => {
+                dispatch(addNotification({type:'delete',text:`admin delete "${offer.device}" offer`}))
+            })
+        }
         setSelected([]);
         setOpen(false);
     }

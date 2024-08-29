@@ -14,3 +14,12 @@ export const DELETE_ACCESSORY = 'DELETE_ACCESSORY';
 export const ADD_OFFER = 'ADD_OFFER';
 export const EDIT_OFFER = 'EDIT_OFFER';
 export const DELETE_OFFER = 'DELETE_OFFER';
+
+
+// LogIn Action
+export const LOG_IN = 'LOG_IN';
+export const LOG_OUT = 'LOG_OUT';
+
+
+// Notification Action
+export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';

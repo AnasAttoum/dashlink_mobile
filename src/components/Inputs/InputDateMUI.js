@@ -11,7 +11,7 @@ export default function InputDateMUI({ title, currentVal, type, setData }) {
     const theme = createTheme({
         palette: {
             primary: {
-                main: '#52b788',
+                main: '#2d8b5f',
             },
         },
         components: {

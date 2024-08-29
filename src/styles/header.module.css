@@ -2,3 +2,61 @@
     background-color: white;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
+
+.containerNotificatins{
+    position: absolute;
+    top: 80px;
+    right: 0;
+    max-height: 250px;
+    overflow: scroll;
+    background-color: #000000a4;
+    backdrop-filter: blur(4px);
+    padding: 5px;
+    z-index: 10;
+}
+.rowNotification{
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    transition: all .3s;
+}
+.rowNotification:hover{
+    color: white;
+    background-color: var(--secondaryWithOpacity);
+}
+
+
+.logOut {
+    background-color: #d20000;
+    color: white;
+    padding: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.logOut::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 20px;
+    height: 100%;
+    background-color: #fff;
+    transform: skewX(-20deg);
+    transition: left .3s;
+    filter: blur(2px);
+}
+.logOut:hover::before{
+    left: calc(100% + 30px);
+}
+
+@media (width<350px) {
+    .name{
+        display: none;
+    }
+}

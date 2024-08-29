@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from '../../styles/device.module.css'
 import InputMUI from '../../components/Inputs/InputMUI'
-import { addAccessory } from '../../Reducers/actions';
+import { addAccessory, addNotification } from '../../Reducers/actions';
 import DeviceSelect from '../../components/Inputs/DeviceSelect';
 
 export default function AddAccessory() {
@@ -60,6 +60,7 @@ export default function AddAccessory() {
         else {
             setWarning('')
             dispatch(addAccessory(data));
+            dispatch(addNotification({type:'add',text:`admin add "${data.name}" accessory`}))
             navigate('/accessories');
         }
     }
@@ -102,7 +103,7 @@ export default function AddAccessory() {
 
                                 <div>
                                     {data.device.map((element, index) => {
-                                        return <div key={index} className='flex items-center'>
+                                        return <div key={index} className={`flex justify-center items-center ${styles.version}`}>
                                             <DeviceSelect index={index} currentVal={element} setData={setData} />
                                             {data.device.length > 1 &&
                                                 <IconButton onClick={() =>

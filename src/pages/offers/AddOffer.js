@@ -11,7 +11,7 @@ import AccessorySelect from '../../components/Inputs/AccessorySelect'
 import VersionSelect from '../../components/Inputs/VersionSelect'
 import InputDateMUI from '../../components/Inputs/InputDateMUI'
 import DeviceSelectForOffer from '../../components/Inputs/DeviceSelectForOffer'
-import { addOffer } from '../../Reducers/actions'
+import { addNotification, addOffer } from '../../Reducers/actions'
 
 export default function AddOffer() {
 
@@ -50,6 +50,7 @@ export default function AddOffer() {
         else {
             setWarning('')
             dispatch(addOffer(data));
+            dispatch(addNotification({type:'add',text:`admin add "${data.device}" offer`}))
             navigate('/offers')
         }
     }
@@ -76,7 +77,7 @@ export default function AddOffer() {
                                 <DeviceSelectForOffer currentVal={data.device} setData={setData} />
 
                                 {data.accessories.map((accessory, index) => {
-                                    return <div key={index} className='flex items-center'>
+                                    return <div key={index} className={`flex justify-center items-center ${styles.version}`}    >
                                         <AccessorySelect index={index} device={data.device} currentVal={accessory} setData={setData} />
                                         {data.accessories.length > 1 &&
                                             <IconButton onClick={() =>

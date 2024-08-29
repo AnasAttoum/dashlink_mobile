@@ -9,7 +9,7 @@ export default function SubInputMUI({ title, type, index, currentVal, setData })
     const theme = createTheme({
         palette: {
             primary: {
-                main: '#52b788',
+                main: '#2d8b5f',
             },
         },
         components: {

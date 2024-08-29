@@ -10,7 +10,7 @@ import styles from '../../styles/device.module.css'
 import InputMUI from '../../components/Inputs/InputMUI'
 import InputDateMUI from '../../components/Inputs/InputDateMUI'
 import SubInputMUI from '../../components/Inputs/SubInputMUI'
-import { addDevice } from '../../Reducers/actions';
+import { addDevice, addNotification } from '../../Reducers/actions';
 
 export default function AddDevice() {
 
@@ -71,6 +71,7 @@ export default function AddDevice() {
         else {
             setWarning('')
             dispatch(addDevice(data));
+            dispatch(addNotification({type:'add',text:`admin add "${data.name}" device`}))
             navigate('/devices');
         }
     }

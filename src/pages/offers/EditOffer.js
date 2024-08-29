@@ -11,7 +11,7 @@ import AccessorySelect from '../../components/Inputs/AccessorySelect'
 import VersionSelect from '../../components/Inputs/VersionSelect'
 import InputDateMUI from '../../components/Inputs/InputDateMUI'
 import DeviceSelectForOffer from '../../components/Inputs/DeviceSelectForOffer'
-import { editOffer } from '../../Reducers/actions'
+import { addNotification, editOffer } from '../../Reducers/actions'
 
 export default function EditOffer() {
 
@@ -51,6 +51,7 @@ export default function EditOffer() {
         else {
             setWarning('')
             dispatch(editOffer(offerIndex, data));
+            dispatch(addNotification({type:'edit',text:`admin edit "${data.device}" offer`}))
             navigate('/offers')
         }
     }

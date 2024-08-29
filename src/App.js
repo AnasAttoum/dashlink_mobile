@@ -13,12 +13,18 @@ import AddAccessory from './pages/accessories/AddAccessory';
 import Offers from './pages/offers/Offers';
 import EditOffer from './pages/offers/EditOffer';
 import AddOffer from './pages/offers/AddOffer';
+import LogIn from './pages/LogIn';
+import Statistics from './pages/Statistics';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route index element={<LogIn />} />
+
         <Route path='' element={<LeftDrawer />}>
+          <Route path='statistics' element={<Statistics />} />
+          
           <Route path='devices' element={<Devices />} />
           <Route path='devices/:deviceIndex' element={<EditDevice />} />
           <Route path='devices/add' element={<AddDevice />} />

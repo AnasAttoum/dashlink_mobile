@@ -1,9 +1,11 @@
+import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import AddIcon from '@mui/icons-material/Add';
 
 export const links = [
+    { name: 'Statistics', url: '/statistics', icon: <DonutLargeIcon /> },
     { name: 'Our Devices', url: '/devices', icon: <PhoneIphoneIcon /> },
     { name: 'Our Accessories', url: '/accessories', icon: <HeadphonesIcon /> },
     { name: 'Our Offers', url: '/offers', icon: <LocalOfferIcon /> },

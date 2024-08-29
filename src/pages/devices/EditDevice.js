@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import styles from '../../styles/device.module.css'
-import { editDevice } from '../../Reducers/actions'
+import { addNotification, editDevice } from '../../Reducers/actions'
 
 export default function EditDevice() {
 
@@ -74,6 +74,7 @@ export default function EditDevice() {
         else {
             setWarning('')
             dispatch(editDevice(deviceIndex, data));
+            dispatch(addNotification({type:'edit',text:`admin edit "${data.name}" device`}))
             navigate('/devices')
         }
     }

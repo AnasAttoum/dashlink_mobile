@@ -1,41 +1,56 @@
-.edit{
+.edit {
     background-color: var(--primary);
     color: white;
     padding: 10px;
     border-radius: 5px;
     font-weight: 700;
     cursor: pointer;
-    transition: all .3s;
+    position: relative;
+    overflow: hidden;
 }
 
-.edit:hover{
-    background-color: var(--secondary);
-    transform: scale(1.05);
+.edit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 20px;
+    height: 100%;
+    background-color: #fff;
+    transform: skewX(-20deg);
+    transition: left .3s;
+    filter: blur(2px);
+}
+.edit:hover::before{
+    left: calc(100% + 30px);
 }
 
 @media (width<1000px) {
-    .container{
+    .container {
         flex-direction: column;
     }
 }
 
 @media (width<650px) {
-    .container{
+    .container {
         flex-direction: column;
         align-items: center;
     }
-    .version{
+
+    .version {
         flex-wrap: wrap;
         border-bottom: 1px solid var(--primary);
         width: 67vw;
+        align-self: center;
     }
-    .input{
+
+    .input {
         width: 60vw !important;
     }
 }
 
 @media (width<450px) {
-    .version{
+    .version {
         border-bottom: none;
         width: 72vw;
     }

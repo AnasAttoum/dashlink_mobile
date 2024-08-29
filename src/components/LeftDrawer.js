@@ -8,12 +8,26 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import Header from './Header';
 import { links, subLinks } from '../CONSTANTS/data';
+import { useSelector } from 'react-redux';
 
 export default function LeftDrawer() {
+  const adminData = useSelector(state => state.Admin)
+  const navigate = useNavigate()
+  const {pathname} = useLocation()
+  
+  React.useEffect(() => {
+    if (!adminData.isLogged)
+      navigate('/')
+  }, [adminData, navigate])
+
+  React.useEffect(() => {
+    document.title='DashLink Mobile | '+ pathname.split('/')[1].toUpperCase()
+  }, [pathname])
+  
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {

@@ -6,6 +6,7 @@
 :root {
   --primary: #2d8b5f;
   --secondary: #498b6c;
+  --secondaryWithOpacity: #498b6c94;
 }
 
 body{
