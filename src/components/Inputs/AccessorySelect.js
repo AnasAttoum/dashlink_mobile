@@ -40,7 +40,7 @@ export default function AccessorySelect({ index, device, currentVal, setData }) 
                                 return el
                             }
                         }),
-                        oldPrice: prev.oldPrice - prevPrice + allAccessories.find(accessory => { return accessory.name === e.target.value }).price
+                        oldPrice: prev.oldPrice - prevPrice + parseInt(allAccessories.find(accessory => { return accessory.name === e.target.value }).price)
                     }))
                 }}
                 label="Accessory"

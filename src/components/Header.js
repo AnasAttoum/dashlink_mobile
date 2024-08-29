@@ -12,6 +12,11 @@ import AddIcon from '@mui/icons-material/Add';
 
 import styles from '../styles/header.module.css'
 import { logOut } from '../Reducers/actions';
+import { Button, Dialog, DialogActions, DialogTitle, Slide } from '@mui/material';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Header({ toggleDrawer }) {
 
@@ -19,6 +24,7 @@ export default function Header({ toggleDrawer }) {
     const navigate = useNavigate()
     const notifications = useSelector(state => state.Notification)
     const [showNotification, setShowNotification] = useState(false)
+    const [open, setOpen] = React.useState(false);
 
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -31,7 +37,16 @@ export default function Header({ toggleDrawer }) {
         },
     }));
 
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleLogOut = () => { 
+        dispatch(logOut()); 
+        navigate('/');
+     }
+
     return (
+        <>
         <div className='relative'>
             <div className={`${styles.header} p-5`}>
                 <div>
@@ -50,7 +65,7 @@ export default function Header({ toggleDrawer }) {
                                 {showNotification &&
                                     <div className={styles.containerNotificatins}>
                                         {notifications.length === 0 ?
-                                            <div className='flex justify-center items-center' style={{ height: '50px' }}> there is no notifications yet</div> :
+                                            <div className='flex justify-center items-center' style={{  color: '#fff',height: '50px' }}> there is no notifications yet</div> :
                                             <div>
                                                 {notifications.toReversed().map((notification, index) => {
                                                     return <div key={index} style={{ color: '#fff', height: '50px' }} className={styles.rowNotification}>
@@ -68,12 +83,29 @@ export default function Header({ toggleDrawer }) {
                                     </div>
                                 }
                             </div>
-                            <div className={styles.logOut} onClick={() => { dispatch(logOut()); navigate('/') }}>Log Out</div>
+                            <div className={styles.logOut} onClick={() => { setOpen(true) }}>Log Out</div>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
+        <React.Fragment>
+            <Dialog
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle>{"Are you sure you want to log out?"}</DialogTitle>
+                
+                <DialogActions>
+                    <Button onClick={handleClose}>cancel</Button>
+                    <Button onClick={handleLogOut}>Yes</Button>
+                </DialogActions>
+            </Dialog>
+        </React.Fragment>
+        </>
     )
 }

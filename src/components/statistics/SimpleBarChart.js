@@ -11,14 +11,15 @@ export default function SimpleBarChart({ accessories, devices }) {
       }, 0)]
     }
   })
-  console.log("🚀 ~ SimpleBarChart ~ num:", num)
 
   return (
+    <div className='m-5 rounded-md' style={{backgroundColor:'#fff'}}>
       <BarChart
         series={num}
         height={350}
         xAxis={[{ data: ['Number of accessories for each device'], scaleType: 'band' }]}
         margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
       />
+      </div>
   );
 }

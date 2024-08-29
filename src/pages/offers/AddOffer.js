@@ -87,7 +87,7 @@ export default function AddOffer() {
                                                         accessories: prev.accessories.filter((_, i) => {
                                                             return i !== index
                                                         }),
-                                                        oldPrice: prev.oldPrice - accessories.find(element => { return element.name === accessory }).price
+                                                        oldPrice: prev.oldPrice - parseInt(accessories.find(element => { return element.name === accessory }).price)
                                                     })
 
                                                 )
@@ -121,7 +121,7 @@ export default function AddOffer() {
                                 <InputMUI title='Sale' type='sale' currentVal={data.sale} setData={setData} />
                                 <div className='flex flex-col justify-center items-center'>
                                     <div>Total Price: <span className='line-through' style={{ color: '#555' }}>{data.oldPrice} €</span></div>
-                                    <div>Price After Sale: <span style={{ color: 'var(--primary)' }}>{(data.oldPrice - data.oldPrice * (data.sale / 100)).toFixed(2)} €</span></div>
+                                    <div>Price After Sale: <span style={{ color: 'var(--primary)' }}>{(data.oldPrice - parseInt(data.oldPrice) * (data.sale / 100)).toFixed(2)} €</span></div>
                                 </div>
                             </div>
 

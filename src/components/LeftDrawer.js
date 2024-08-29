@@ -13,6 +13,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Header from './Header';
 import { links, subLinks } from '../CONSTANTS/data';
 import { useSelector } from 'react-redux';
+import Footer from './Footer';
 
 export default function LeftDrawer() {
   const adminData = useSelector(state => state.Admin)
@@ -85,6 +86,8 @@ export default function LeftDrawer() {
       </Drawer>
 
       <Outlet />
+      
+      <Footer/>
 
     </div>
   );

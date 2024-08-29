@@ -16,8 +16,8 @@ export default function Statistics() {
     <div className='flex flex-col flex-wrap'>
 
       <div className={`flex justify-evenly ${styles.container}`}>
-        <div className='flex gap-10'>
-          <div className={`flex flex-col justify-center items-center gap-5 m-5 p-5 rounded-full ${styles.card}`} style={{ backgroundColor: 'var(--primary)', aspectRatio: '1/1', width: '240px' }}>
+        <div className={`flex gap-10 relative ${styles.circles}`} >
+          <div className={`flex flex-col justify-center items-center gap-5 m-5 p-5 rounded-full ${styles.card}`} style={{ backgroundColor: 'var(--secondaryWithOpacity)', aspectRatio: '1/1', width: '240px',backdropFilter:'blur(3px)' }}>
             <div style={{ color: '#fff' }}>Gain valuable insights into</div>
             <div style={{ color: '#fff', fontWeight: '700' }}>DashLink Mobile</div>
           </div>
