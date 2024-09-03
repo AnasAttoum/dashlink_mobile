@@ -68,9 +68,9 @@ export default function SwitchMode() {
     return (
         <FormGroup>
             <FormControlLabel
-                control={<MaterialUISwitch sx={{ m: 1 }} checked={mode === 'dark' ? true : false} />}
+                control={<MaterialUISwitch sx={{ m: 0 }} checked={mode === 'dark' ? true : false} />}
                 label=""
-                onClick={()=>setMode(prev=>prev==='light'?'dark':'light')}
+                onClick={() => setMode(prev => prev === 'light' ? 'dark' : 'light')}
             />
         </FormGroup>
     )
