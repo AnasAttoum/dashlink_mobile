@@ -24,6 +24,7 @@ import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 import styles from '../../styles/tableAccessories.module.css'
+import { Mode } from '../../store/Context';
 
 function createData(id, image, name, device, price) {
   return {
@@ -127,6 +128,7 @@ function EnhancedTableHead(props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            className={props.mode==='dark'?'tableRow':''}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -183,6 +185,8 @@ export default function TableAccessoriesMUI() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState(false);
 
+  const { mode } = React.useContext(Mode)
+
 
   function EnhancedTableToolbar(props) {
     const { selected } = props;
@@ -204,7 +208,7 @@ export default function TableAccessoriesMUI() {
       >
         {selected.length > 0 ? (
           <Typography
-            sx={{ flex: '1 1 100%' }}
+          sx={mode==='dark'?{ flex: '1 1 100%',color:'white' }:{ flex: '1 1 100%' }}
             color="inherit"
             variant="subtitle1"
             component="div"
@@ -298,8 +302,10 @@ export default function TableAccessoriesMUI() {
 
   return (
     <>
-      <Box sx={{ width: '100%' }}>
-        <Paper sx={{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px '}}>
+      <Box sx={{ width: '100%',minHeight:'60vh' }}>
+        <Paper sx={mode==='dark'?
+          { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ',backgroundColor:'#444' }
+          :{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ',backgroundColor:'#fff' }}>
           <EnhancedTableToolbar selected={selected} setSelected={setSelected} />
 
           <div className='flex justify-center'>
@@ -370,6 +376,7 @@ export default function TableAccessoriesMUI() {
                     onSelectAllClick={handleSelectAllClick}
                     onRequestSort={handleRequestSort}
                     rowCount={rows.length}
+                    mode={mode}
                   />
                   <TableBody>
                     {visibleRows.map((row, index) => {
@@ -400,11 +407,11 @@ export default function TableAccessoriesMUI() {
                             <img src={row.image} alt={row.name} style={{ height: '75px' }} />
                           </TableCell>
 
-                          <TableCell align="left">{row.name}</TableCell>
-                          <TableCell align="left">
+                          <TableCell align="left" className={mode==='dark'?'tableRow':''}>{row.name}</TableCell>
+                          <TableCell align="left" className={mode==='dark'?'tableRow':''}>
                             {row.device.map((element, index) => { return <div key={index}>{row.device.length>1?<span>{index+1}. </span>:null} {element}</div> })}
                           </TableCell>
-                          <TableCell align="right">{row.price}</TableCell>
+                          <TableCell align="right" className={mode==='dark'?'tableRow':''}>{row.price}</TableCell>
                           <TableCell align="right">
                             <div className='flex justify-end items-center'>
                               <Link to={`/accessories/${row.id}`}>

@@ -12,12 +12,14 @@ import VersionSelect from '../../components/Inputs/VersionSelect'
 import InputDateMUI from '../../components/Inputs/InputDateMUI'
 import DeviceSelectForOffer from '../../components/Inputs/DeviceSelectForOffer'
 import { addNotification, addOffer } from '../../Reducers/actions'
+import { Mode } from '../../store/Context'
 
 export default function AddOffer() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const accessories = useSelector(state => state.Accessories)
+    const { mode } = React.useContext(Mode)
 
     const [data, setData] = useState({
         device: '',
@@ -41,7 +43,7 @@ export default function AddOffer() {
         else if (NOW.getTime() >= new Date(data.endDate).getTime()) {
             setWarning('End date must be in the future')
         }
-        else if (data.sale <= 0 || data.sale>=100) {
+        else if (data.sale <= 0 || data.sale >= 100) {
             setWarning('Sale value must be between 0 and 99')
         }
         else if (isNaN(data.sale)) {
@@ -50,7 +52,7 @@ export default function AddOffer() {
         else {
             setWarning('')
             dispatch(addOffer(data));
-            dispatch(addNotification({type:'add',text:`admin added "${data.device}" offer`}))
+            dispatch(addNotification({ type: 'add', text: `admin added "${data.device}" offer` }))
             navigate('/offers')
         }
     }
@@ -58,7 +60,8 @@ export default function AddOffer() {
     return (
         <div className='m-5 p-5'>
             <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px' }}>
+                <Paper sx={mode === 'dark' ? { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px', backgroundColor: '#999' }
+                    : { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px' }}>
                     <Typography
                         sx={{ flex: '1 1 100%', color: 'var(--primary)', textAlign: 'center' }}
                         variant="h5"
@@ -80,17 +83,41 @@ export default function AddOffer() {
                                     return <div key={index} className={`flex justify-center items-center ${styles.version}`}    >
                                         <AccessorySelect index={index} device={data.device} currentVal={accessory} setData={setData} />
                                         {data.accessories.length > 1 &&
-                                            <IconButton onClick={() =>
-                                                setData(
-                                                    prev => ({
-                                                        ...prev,
-                                                        accessories: prev.accessories.filter((_, i) => {
-                                                            return i !== index
-                                                        }),
-                                                        oldPrice: prev.oldPrice - parseInt(accessories.find(element => { return element.name === accessory }).price)
-                                                    })
+                                            <IconButton onClick={() => {
+                                                if (data.accessories[index] !== '') {
+                                                    setData(
+                                                        prev => ({
+                                                            ...prev,
+                                                            accessories: prev.accessories.filter((_, i) => {
+                                                                return i !== index
+                                                            }),
+                                                            oldPrice: prev.oldPrice - parseInt(accessories.find(element => { return element.name === accessory }).price)
+                                                        })
 
-                                                )
+                                                    )
+                                                }
+                                                else{
+                                                    setData(
+                                                        prev => ({
+                                                            ...prev,
+                                                            accessories: prev.accessories.filter((_, i) => {
+                                                                return i !== index
+                                                            }),
+                                                        })
+
+                                                    )
+                                                }
+                                                // setData(
+                                                //     prev => ({
+                                                //         ...prev,
+                                                //         accessories: prev.accessories.filter((_, i) => {
+                                                //             return i !== index
+                                                //         }),
+                                                //         oldPrice: prev.oldPrice - parseInt(accessories.find(element => { return element.name === accessory }).price)
+                                                //     })
+
+                                                // )
+                                            }
                                             }>
                                                 <Tooltip title="Delete">
                                                     <DeleteIcon sx={{ color: '#d20000' }} />
@@ -112,10 +139,10 @@ export default function AddOffer() {
                                     </IconButton>
                                 </div>
 
-                                {data.device !== '' && 
-                                <>
-                                    <VersionSelect deviceName={data.device} currentVal={data.version} setData={setData} />
-                                </>
+                                {data.device !== '' &&
+                                    <>
+                                        <VersionSelect deviceName={data.device} currentVal={data.version} setData={setData} />
+                                    </>
                                 }
                                 <InputDateMUI title='End Date' type='endDate' currentVal={data.endDate} setData={setData} />
                                 <InputMUI title='Sale' type='sale' currentVal={data.sale} setData={setData} />

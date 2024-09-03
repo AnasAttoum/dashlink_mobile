@@ -12,6 +12,7 @@ import VersionSelect from '../../components/Inputs/VersionSelect'
 import InputDateMUI from '../../components/Inputs/InputDateMUI'
 import DeviceSelectForOffer from '../../components/Inputs/DeviceSelectForOffer'
 import { addNotification, editOffer } from '../../Reducers/actions'
+import { Mode } from '../../store/Context'
 
 export default function EditOffer() {
 
@@ -24,6 +25,8 @@ export default function EditOffer() {
 
     const [data, setData] = useState(offer)
     const [warning, setWarning] = useState('')
+
+    const { mode } = React.useContext(Mode)
 
 
     useEffect(() => {
@@ -59,7 +62,8 @@ export default function EditOffer() {
     return (
         <div className='m-5 p-5'>
             <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px' }}>
+                <Paper sx={mode === 'dark' ? { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px', backgroundColor: '#999' }
+                    : { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px' }}>
                     <Typography
                         sx={{ flex: '1 1 100%', color: 'var(--primary)', textAlign: 'center' }}
                         variant="h5"

@@ -9,6 +9,15 @@
   --secondaryWithOpacity: #498b6c94;
 }
 
-body{
+body {
   background-color: #ddd;
+}
+
+.dark {
+  color: #ddd;
+  background-color: #222;
+}
+
+.tableRow {
+  color: white !important;
 }

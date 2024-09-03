@@ -10,6 +10,7 @@ import styles from '../../styles/device.module.css'
 import InputMUI from '../../components/Inputs/InputMUI'
 import { addAccessory, addNotification } from '../../Reducers/actions';
 import DeviceSelect from '../../components/Inputs/DeviceSelect';
+import { Mode } from '../../store/Context';
 
 export default function AddAccessory() {
 
@@ -17,6 +18,7 @@ export default function AddAccessory() {
     const navigate = useNavigate()
     const [warning, setWarning] = useState('')
     const accessories = useSelector(state => state.Accessories)
+    const { mode } = React.useContext(Mode)
 
     const [data, setData] = useState({
         image: '/Images/Upload.jpg',
@@ -69,7 +71,8 @@ export default function AddAccessory() {
     return (
         <div className='m-5 p-5'>
             <Box sx={{ width: '100%' }}>
-                <Paper sx={{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px' }}>
+                <Paper sx={mode === 'dark' ? { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px', backgroundColor: '#999' }
+                    : { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding: '10px' }}>
                     <Typography
                         sx={{ flex: '1 1 100%', color: 'var(--primary)', textAlign: 'center' }}
                         variant="h5"

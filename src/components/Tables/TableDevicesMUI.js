@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux'
 import Slider from '../Slider';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import {Mode} from '../..//store/Context'
 
 function createData(id, image, name, date, ram, storage, price) {
   return {
@@ -139,6 +140,7 @@ function EnhancedTableHead(props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            className={props.mode==='dark'?'tableRow':''}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -184,6 +186,8 @@ export default function TableDevicesMUI() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState(false);
 
+  const { mode } = React.useContext(Mode)
+
   function EnhancedTableToolbar(props) {
     const { selected } = props;
 
@@ -204,7 +208,7 @@ export default function TableDevicesMUI() {
       >
         {selected.length > 0 ? (
           <Typography
-            sx={{ flex: '1 1 100%' }}
+          sx={mode==='dark'?{ flex: '1 1 100%',color:'white' }:{ flex: '1 1 100%' }}
             color="inherit"
             variant="subtitle1"
             component="div"
@@ -298,8 +302,10 @@ export default function TableDevicesMUI() {
 
   return (
     <>
-      <Box sx={{ width: '100%' }}>
-        <Paper sx={{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ' }}>
+      <Box sx={{ width: '100%',minHeight:'60vh' }}>
+        <Paper sx={mode==='dark'?
+          { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ',backgroundColor:'#444' }
+          :{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ',backgroundColor:'#fff' }}>
           <EnhancedTableToolbar selected={selected} setSelected={setSelected} />
           <TableContainer>
             <Table
@@ -314,6 +320,7 @@ export default function TableDevicesMUI() {
                 onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
+                mode={mode}
               />
               <TableBody>
                 {visibleRows.map((row, index) => {
@@ -344,15 +351,15 @@ export default function TableDevicesMUI() {
                         <img src={row.image} alt={row.name} style={{ height: '75px' }} />
                       </TableCell>
 
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.date}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left" className={mode==='dark'?'tableRow':''}>{row.name}</TableCell>
+                      <TableCell align="left" className={mode==='dark'?'tableRow':''}>{row.date}</TableCell>
+                      <TableCell align="right" className={mode==='dark'?'tableRow':''}>
                         {row.ram.map((element, index) => { return <div key={index}>{element}</div> })}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="right" className={mode==='dark'?'tableRow':''}>
                         {row.storage.map((element, index) => { return <div key={index}>{element}</div> })}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="right" className={mode==='dark'?'tableRow':''}>
                         {row.price.map((element, index) => { return <div key={index}>{element}</div> })}
                       </TableCell>
                       <TableCell align="right">

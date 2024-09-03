@@ -14,21 +14,23 @@ import Header from './Header';
 import { links, subLinks } from '../CONSTANTS/data';
 import { useSelector } from 'react-redux';
 import Footer from './Footer';
+import { Mode } from '../store/Context';
 
 export default function LeftDrawer() {
   const adminData = useSelector(state => state.Admin)
   const navigate = useNavigate()
-  const {pathname} = useLocation()
-  
+  const { pathname } = useLocation()
+  const { mode } = React.useContext(Mode)
+
   React.useEffect(() => {
     if (!adminData.isLogged)
       navigate('/')
   }, [adminData, navigate])
 
   React.useEffect(() => {
-    document.title='DashLink Mobile | '+ pathname.split('/')[1].toUpperCase()
+    document.title = 'DashLink Mobile | ' + pathname.split('/')[1].toUpperCase()
   }, [pathname])
-  
+
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -36,19 +38,19 @@ export default function LeftDrawer() {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={mode === 'dark' ? { width: 250, minHeight: '100vh', backgroundColor: '#333', color: 'white' } : { width: 250, minHeight: '100vh' }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemText primary={'DashLink Mobile'} sx={{ color: 'var(--primary)' }} />
           </ListItemButton>
         </ListItem>
-        {links.map((link,index) => (
+        {links.map((link, index) => (
           <Link key={index} to={link.url}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {link.icon}
+                  {mode === 'dark' ? link.iconDark : link.icon}
                 </ListItemIcon>
                 <ListItemText primary={link.name} />
               </ListItemButton>
@@ -58,12 +60,12 @@ export default function LeftDrawer() {
       </List>
       <Divider />
       <List>
-        {subLinks.map((link,index) => (
+        {subLinks.map((link, index) => (
           <Link key={index} to={link.url}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {link.icon}
+                  {mode === 'dark' ? link.iconDark : link.icon}
                 </ListItemIcon>
                 <ListItemText primary={link.name} />
               </ListItemButton>
@@ -86,8 +88,8 @@ export default function LeftDrawer() {
       </Drawer>
 
       <Outlet />
-      
-      <Footer/>
+
+      <Footer />
 
     </div>
   );

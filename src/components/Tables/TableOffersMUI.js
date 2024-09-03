@@ -25,6 +25,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 import styles from '../../styles/tableAccessories.module.css'
 import dayjs from 'dayjs';
+import { Mode } from '../../store/Context';
 
 function createData(id, device, accessories, version, endDate, sale, oldPrice) {
   return {
@@ -142,6 +143,7 @@ function EnhancedTableHead(props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            className={props.mode==='dark'?'tableRow':''}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -177,17 +179,19 @@ export default function TableOffersMUI() {
   const [currentVal, setCurrentVal] = React.useState('');
   const [selected, setSelected] = React.useState([]);
 
+  const { mode } = React.useContext(Mode)
+
   let rows = React.useMemo(() => {
     setSelected([])
     if (currentVal === '')
       return offers.map((offer, index) => {
-        return createData(index, offer.device, offer.accessories, offer.version, dayjs(offer.endDate).$d.toString().slice(0,15), offer.sale, offer.oldPrice)
+        return createData(index, offer.device, offer.accessories, offer.version, dayjs(offer.endDate).$d.toString().slice(0, 15), offer.sale, offer.oldPrice)
       })
     else
       return offers.filter(offer => {
-        return offer.device===currentVal
+        return offer.device === currentVal
       }).map((offer, index) => {
-        return createData(index, offer.device, offer.accessories, offer.version, dayjs(offer.endDate).$d.toString().slice(0,15), offer.sale, offer.oldPrice)
+        return createData(index, offer.device, offer.accessories, offer.version, dayjs(offer.endDate).$d.toString().slice(0, 15), offer.sale, offer.oldPrice)
       })
   }, [offers, currentVal])
 
@@ -219,7 +223,7 @@ export default function TableOffersMUI() {
       >
         {selected.length > 0 ? (
           <Typography
-            sx={{ flex: '1 1 100%' }}
+            sx={mode==='dark'?{ flex: '1 1 100%',color:'white' }:{ flex: '1 1 100%' }}
             color="inherit"
             variant="subtitle1"
             component="div"
@@ -313,8 +317,10 @@ export default function TableOffersMUI() {
 
   return (
     <>
-      <Box sx={{ width: '100%' }}>
-        <Paper sx={{ width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px ' }}>
+      <Box sx={{ width: '100%',minHeight:'60vh'}}>
+        <Paper sx={mode === 'dark' ?
+          { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ', backgroundColor: '#444' }
+          : { width: '100%', mb: 2, borderRadius: '15px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px  ', backgroundColor: '#fff' }}>
           <EnhancedTableToolbar selected={selected} setSelected={setSelected} />
 
           <div className='flex justify-center'>
@@ -385,12 +391,13 @@ export default function TableOffersMUI() {
                     onSelectAllClick={handleSelectAllClick}
                     onRequestSort={handleRequestSort}
                     rowCount={rows.length}
+                    mode={mode}
                   />
                   <TableBody>
                     {visibleRows.map((row, index) => {
                       const isItemSelected = isSelected(row.id);
                       const labelId = `enhanced-table-checkbox-${index}`;
-                      const device = devices.find((device)=>{return device.name===row.device})
+                      const device = devices.find((device) => { return device.name === row.device })
 
                       return (
                         <TableRow
@@ -413,16 +420,16 @@ export default function TableOffersMUI() {
                             />
                           </TableCell>
 
-                          <TableCell align="left">{row.device}</TableCell>
-                          <TableCell align="left">
-                            {row.accessories.map((accessory, index) => { return <div key={index}>{row.accessories.length>1?<span>{index+1}. </span>:null} {accessory}</div> })}
+                          <TableCell align="left" className={mode==='dark'?'tableRow':''}>{row.device}</TableCell>
+                          <TableCell align="left" className={mode==='dark'?'tableRow':''}>
+                            {row.accessories.map((accessory, index) => { return <div key={index}>{row.accessories.length > 1 ? <span>{index + 1}. </span> : null} {accessory}</div> })}
                           </TableCell>
-                          <TableCell align="left">RAM: {device.ram[row.version]} GB | Storage: {device.storage[row.version]} GB</TableCell>
-                          <TableCell align="left">{row.endDate}</TableCell>
-                          <TableCell align="right">{row.sale}</TableCell>
+                          <TableCell align="left" className={mode==='dark'?'tableRow':''}>RAM: {device.ram[row.version]} GB | Storage: {device.storage[row.version]} GB</TableCell>
+                          <TableCell align="left" className={mode==='dark'?'tableRow':''}>{row.endDate}</TableCell>
+                          <TableCell align="right" className={mode==='dark'?'tableRow':''}>{row.sale}</TableCell>
                           <TableCell align="right">
-                              <div className='line-through' style={{color:'#555'}}>{row.oldPrice}</div>
-                              <div style={{color:'var(--primary)'}}>{(row.oldPrice-row.oldPrice*(row.sale/100)).toFixed(2)}</div>
+                            <div className='line-through' style={mode==='dark'?{color:'#aaa'}:{color:'#555'}}>{row.oldPrice}</div>
+                            <div style={{ color: 'var(--primary)' }}>{(row.oldPrice - row.oldPrice * (row.sale / 100)).toFixed(2)}</div>
                           </TableCell>
                           <TableCell align="right">
                             <div className='flex justify-end items-center'>
